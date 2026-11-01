@@ -1,0 +1,19 @@
+# Data mentah & antara (unduh ulang dengan script di src/)
+data/raw/*
+data/interim/*
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+
+logs/
+
+# Python
+__pycache__/
+.venv/
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+
+# CSV besar untuk Tableau (dibuat ulang oleh src/export_tableau.py)
+data/exports/harga_mingguan.csv
+data/exports/harga_bulanan.csv

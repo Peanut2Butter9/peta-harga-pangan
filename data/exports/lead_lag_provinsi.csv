@@ -1,0 +1,35 @@
+wilayah_id,nama_wilayah,skor_lead,pass_through,porsi_hari_tanpa_perubahan,data_jarang_diperbarui
+1,Aceh,-0.0920,0.2895,0.2675,False
+2,Sumatera Utara,-0.0000,0.1343,0.2835,False
+3,Sumatera Barat,0.0762,0.2577,0.4348,True
+4,Riau,0.0169,0.3251,0.3230,False
+5,Kepulauan Riau,-0.1535,0.1375,0.5498,True
+6,Jambi,0.1815,0.2930,0.3456,False
+7,Bengkulu,-0.0923,0.3619,0.3502,False
+8,Sumatera Selatan,0.1827,0.3711,0.3573,False
+9,Kepulauan Bangka Belitung,-0.1391,0.5080,0.4414,True
+10,Lampung,0.2046,0.3591,0.3215,False
+11,Banten,0.3234,,0.2205,False
+12,Jawa Barat,0.2641,,0.1216,False
+13,DKI Jakarta,0.2483,,0.5204,True
+14,Jawa Tengah,0.3423,,0.0964,False
+15,DI Yogyakarta,0.2042,,0.5952,True
+16,Jawa Timur,0.3602,,0.1053,False
+17,Bali,0.0192,0.4973,0.4345,True
+18,Nusa Tenggara Barat,-0.0160,0.4190,0.3452,False
+19,Nusa Tenggara Timur,-0.2660,0.1289,0.4235,True
+20,Kalimantan Barat,-0.0981,0.2352,0.2641,False
+21,Kalimantan Selatan,-0.0750,0.4800,0.5058,True
+22,Kalimantan Tengah,-0.0860,0.3746,0.4468,True
+23,Kalimantan Timur,-0.1947,0.3449,0.2587,False
+24,Kalimantan Utara,-0.2407,0.2736,0.4776,True
+25,Gorontalo,-0.0326,0.2021,0.4551,True
+26,Sulawesi Selatan,-0.1724,0.4123,0.2104,False
+27,Sulawesi Tenggara,-0.1606,0.2088,0.5223,True
+28,Sulawesi Tengah,-0.1608,0.2636,0.5973,True
+29,Sulawesi Utara,-0.0732,0.1953,0.4293,True
+30,Sulawesi Barat,-0.2320,0.3671,0.5324,True
+31,Maluku,-0.2649,0.2617,0.5858,True
+32,Maluku Utara,-0.2307,0.1141,0.8865,True
+33,Papua,-0.1301,0.0715,0.3481,False
+34,Papua Barat,-0.1553,0.1717,0.5195,True

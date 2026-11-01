@@ -1,0 +1,35 @@
+wilayah_id,nama_wilayah,pulau,cluster,level_pokok,level_protein,level_bumbu,ayunan_cabai_bawang
+22,Kalimantan Tengah,Kalimantan,Mahal tapi stabil,0.0937,0.0665,0.1438,0.9077
+24,Kalimantan Utara,Kalimantan,Mahal tapi stabil,0.0382,0.0919,0.3052,0.7109
+31,Maluku,Maluku & Papua,Mahal tapi stabil,0.0658,0.1160,0.1712,0.8039
+32,Maluku Utara,Maluku & Papua,Mahal tapi stabil,0.0917,0.1420,0.4311,0.8334
+33,Papua,Maluku & Papua,Mahal tapi stabil,0.1575,0.1793,0.3628,0.8662
+34,Papua Barat,Maluku & Papua,Mahal tapi stabil,0.0864,0.1881,0.2471,0.8104
+1,Aceh,Sumatera,Mendekati rata-rata,-0.0105,-0.0379,-0.0829,0.8787
+13,DKI Jakarta,Jawa,Mendekati rata-rata,0.0202,-0.0165,0.0940,1.2187
+25,Gorontalo,Sulawesi,Mendekati rata-rata,0.0759,-0.0160,0.0376,1.0597
+12,Jawa Barat,Jawa,Mendekati rata-rata,-0.0248,-0.0225,-0.0209,1.3378
+20,Kalimantan Barat,Kalimantan,Mendekati rata-rata,0.0083,0.0349,0.0714,0.8900
+21,Kalimantan Selatan,Kalimantan,Mendekati rata-rata,0.0534,0.1123,-0.0966,1.2050
+23,Kalimantan Timur,Kalimantan,Mendekati rata-rata,0.0171,0.0447,0.0369,0.9446
+9,Kepulauan Bangka Belitung,Sumatera,Mendekati rata-rata,-0.0653,0.0337,0.0683,0.8623
+5,Kepulauan Riau,Sumatera,Mendekati rata-rata,-0.0731,-0.0732,-0.0167,0.8471
+19,Nusa Tenggara Timur,Bali & Nusa Tenggara,Mendekati rata-rata,-0.0083,0.0538,0.0390,0.9292
+28,Sulawesi Tengah,Sulawesi,Mendekati rata-rata,0.0083,-0.0242,-0.0038,1.1123
+27,Sulawesi Tenggara,Sulawesi,Mendekati rata-rata,0.0274,-0.0112,0.0869,1.2350
+29,Sulawesi Utara,Sulawesi,Mendekati rata-rata,-0.0558,0.0129,0.0015,1.1953
+3,Sumatera Barat,Sumatera,Mendekati rata-rata,0.0340,0.1004,-0.0749,1.1655
+8,Sumatera Selatan,Sumatera,Mendekati rata-rata,-0.0236,-0.0501,-0.0059,1.0426
+17,Bali,Bali & Nusa Tenggara,Murah tapi bergejolak,-0.0226,-0.0145,-0.1838,1.8130
+11,Banten,Jawa,Murah tapi bergejolak,-0.0338,-0.0169,-0.0345,1.4819
+7,Bengkulu,Sumatera,Murah tapi bergejolak,-0.0262,-0.0360,-0.0797,1.3365
+15,DI Yogyakarta,Jawa,Murah tapi bergejolak,-0.0569,-0.0451,-0.0781,1.5857
+6,Jambi,Sumatera,Murah tapi bergejolak,-0.0263,-0.0706,-0.1412,1.5273
+14,Jawa Tengah,Jawa,Murah tapi bergejolak,-0.0419,-0.0721,-0.1525,1.5789
+16,Jawa Timur,Jawa,Murah tapi bergejolak,-0.0604,-0.1007,-0.2291,1.8790
+10,Lampung,Sumatera,Murah tapi bergejolak,-0.0477,-0.0903,-0.1027,1.3856
+18,Nusa Tenggara Barat,Bali & Nusa Tenggara,Murah tapi bergejolak,-0.0553,-0.0363,-0.2047,1.8685
+4,Riau,Sumatera,Murah tapi bergejolak,-0.0254,-0.1035,-0.0628,1.2489
+30,Sulawesi Barat,Sulawesi,Murah tapi bergejolak,-0.0151,-0.1501,-0.1670,1.3880
+26,Sulawesi Selatan,Sulawesi,Murah tapi bergejolak,-0.0787,-0.1673,-0.2285,1.4278
+2,Sumatera Utara,Sumatera,Murah tapi bergejolak,-0.0213,-0.0106,-0.1338,1.3810

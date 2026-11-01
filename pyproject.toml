@@ -1,0 +1,17 @@
+[project]
+name = "peta-harga-pangan"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "jupyterlab>=4.6.5",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.4",
+    "pandas>=3.1.0",
+    "psycopg[binary]>=3.3.6",
+    "requests>=2.34.2",
+    "scikit-learn>=1.9.1",
+    "scipy>=1.18.1",
+    "seaborn>=0.13.2",
+    "sqlalchemy>=2.1.6",
+    "statsmodels>=0.15.0",
+]

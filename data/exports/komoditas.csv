@@ -1,0 +1,22 @@
+komoditas_id,varian,kategori,satuan,urutan_varian,kelompok
+1,Beras Kualitas Bawah I,Beras,kg,1,Pokok & kemasan
+2,Beras Kualitas Bawah II,Beras,kg,2,Pokok & kemasan
+3,Beras Kualitas Medium I,Beras,kg,3,Pokok & kemasan
+4,Beras Kualitas Medium II,Beras,kg,4,Pokok & kemasan
+5,Beras Kualitas Super I,Beras,kg,5,Pokok & kemasan
+6,Beras Kualitas Super II,Beras,kg,6,Pokok & kemasan
+7,Daging Ayam Ras Segar,Daging Ayam,kg,7,Segar
+8,Daging Sapi Kualitas 1,Daging Sapi,kg,8,Segar
+9,Daging Sapi Kualitas 2,Daging Sapi,kg,9,Segar
+10,Telur Ayam Ras Segar,Telur Ayam,kg,10,Segar
+11,Bawang Merah Ukuran Sedang,Bawang Merah,kg,11,Segar
+12,Bawang Putih Ukuran Sedang,Bawang Putih,kg,12,Segar
+13,Cabai Merah Besar,Cabai Merah,kg,13,Segar
+14,Cabai Merah Keriting,Cabai Merah,kg,14,Segar
+15,Cabai Rawit Hijau,Cabai Rawit,kg,15,Segar
+16,Cabai Rawit Merah,Cabai Rawit,kg,16,Segar
+17,Minyak Goreng Curah,Minyak Goreng,kg,17,Pokok & kemasan
+18,Minyak Goreng Kemasan Bermerk 1,Minyak Goreng,kg,18,Pokok & kemasan
+19,Minyak Goreng Kemasan Bermerk 2,Minyak Goreng,kg,19,Pokok & kemasan
+20,Gula Pasir Kualitas Premium,Gula Pasir,kg,20,Pokok & kemasan
+21,Gula Pasir Lokal,Gula Pasir,kg,21,Pokok & kemasan
