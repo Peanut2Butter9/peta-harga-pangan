@@ -2,7 +2,7 @@
 
 Analisis harga pangan strategis Indonesia 2018–2026: rantai pasok, disparitas wilayah, dan pola musiman. Data berasal dari [PIHPS Nasional (Bank Indonesia)](https://www.bi.go.id/hargapangan).
 
-> 📊 **Dashboard interaktif:** [Peta Harga Pangan Indonesia di Tableau Public](https://public.tableau.com/app/profile/moh.hasbi.alfarizi/viz/peta_harga_pangan/1Monitorharga). Tiga halaman: monitor harga, peta wilayah, serta rantai pasok & risiko. Cara membangunnya ada di [docs/05](docs/05_dashboard_tableau.md).
+> 📊 **Dashboard interaktif:** [Peta Harga Pangan Indonesia di Tableau Public](https://public.tableau.com/app/profile/moh.hasbi.alfarizi/viz/peta_harga_pangan/1Monitorharga). Tiga halaman: monitor harga, peta wilayah, serta rantai pasok & risiko.
 
 ## Temuan utama
 
