@@ -2,7 +2,7 @@
 
 Dashboard untuk tim procurement: tiga halaman yang menjawab **berapa harga sekarang**, **di mana lebih mahal**, dan **kapan harus waspada serta beli di mana**.
 
-> 🔗 **Link Tableau Public:** _(isi setelah dipublikasikan)_
+> 🔗 **Link Tableau Public:** [Peta Harga Pangan Indonesia](https://public.tableau.com/app/profile/moh.hasbi.alfarizi/viz/peta_harga_pangan/1Monitorharga)
 
 | Halaman | Pertanyaan | Dari analisis |
 |---|---|---|
@@ -112,6 +112,7 @@ Aturannya sama dengan grafik di notebook ([`src/viz.py`](../src/viz.py)), supaya
   - **Pangan - Kategori** untuk identitas. Pakai berurutan dan jangan diulang. Untuk scatter dan peta, maksimal 3 warna pertama.
   - **Pangan - Divergen** untuk selisih dan perubahan. Biru = turun atau lebih murah, abu-abu = 0, merah = naik atau lebih mahal. Selalu atur **Center = 0**, dan biarkan *Use Full Color Range* **tidak** dicentang.
   - **Pangan - Sekuensial** untuk besaran.
+  - **Pangan - Nasional vs Wilayah** khusus untuk garis tren: Nasional abu-abu, Wilayah terpilih biru. Pilih palet ini lalu klik *Assign Palette*, sehingga tidak perlu mengetik kode hex. Pastikan kedua seri sedang tampil, misalnya dengan memilih wilayah selain Nasional untuk sementara.
 - **Warna mengikuti entitas, bukan peringkat.** Contohnya, "Nasional" selalu abu-abu `#898781` dan "Wilayah terpilih" selalu biru `#2a78d6`, apa pun wilayah yang dipilih.
 - **Teks** selalu memakai warna teks (`#0b0b0b` untuk judul, `#52514e` untuk subjudul dan label), bukan warna seri.
 - **Latar** `#fcfcfb`. Grid tipis `#e1e0d9`, tanpa border dan tanpa row banding. Garis 2 px.
@@ -280,7 +281,7 @@ IF [Signifikan] THEN "Signifikan (Holm p < 0,05)" ELSE "Belum signifikan" END
 | Sheet | Data source | Bangun | Filter |
 |---|---|---|---|
 | **KPI** | Mingguan | *Columns:* Measure Names. *Text:* Measure Values (KPI Harga, KPI 4 Minggu, KPI 1 Tahun, KPI vs Nasional). Ganti alias Measure Names menjadi label kartu. Mark *Text*, ukuran angka 22 pt | F Varian, F Pasar, F Wilayah Terpilih |
-| **Tren Harga** | Mingguan | *Columns:* Minggu (Exact Date, continuous). *Rows:* AVG(Harga). *Color:* Seri (Wilayah terpilih `#2a78d6`, Nasional `#898781`). Judul dinamis: "Harga `<Pilih Varian>` per minggu, `<Pilih Wilayah>` vs nasional" | F Varian, F Pasar, F Wilayah dan Nasional, F Rentang |
+| **Tren Harga** | Mingguan | *Columns:* Minggu (Exact Date, continuous). *Rows:* AVG(Harga). *Color:* Seri, palet Pangan - Nasional vs Wilayah (Wilayah terpilih `#2a78d6`, Nasional `#898781`). Judul dinamis: "Harga `<Pilih Varian>` per minggu, `<Pilih Wilayah>` vs nasional" | F Varian, F Pasar, F Wilayah dan Nasional, F Rentang |
 | **Kalender** | Bulanan | *Columns:* MONTH(Bulan) diskret. *Rows:* YEAR(Bulan) diskret. Mark *Square*. *Color:* AVG(Perubahan Bulanan), palet Divergen, Center 0. *Label:* AVG(Perubahan Bulanan) | F Varian, F Pasar, F Wilayah Terpilih |
 | **Peta** | Bulanan | Lihat [3.6](#36-peta-provinsi). *Color:* Selisih vs Nasional (Divergen, Center 0). *Tooltip:* Wilayah, Cluster, AVG(Harga), AVG(Harga Nasional Bulanan), Selisih | F Varian, F Pasar, F Tahun Peta, Is Nasional = False |
 | **Peringkat** | Bulanan | *Rows:* Wilayah, urut menurun berdasarkan Selisih vs Nasional. *Columns:* Selisih vs Nasional. *Color:* sama dengan Peta. *Label:* selisih | sama dengan Peta |
@@ -327,7 +328,7 @@ Dengan default (Cabai Rawit Merah, Nasional, Pasar Tradisional, 2026), dashboard
 | Peta / Peringkat | 32 provinsi. Termahal: Maluku Utara +52%, Maluku +48%, Papua +38%. Termurah: Sumatera Utara −38%, Sulawesi Barat −30%, Sulawesi Selatan −27% |
 | Rantai Pasok | Produsen Rp50.074 (−29%) · Pedagang Besar Rp58.204 (−17%) · Pasar Tradisional Rp70.418 (acuan) · Pasar Modern Rp105.283 (+46%) |
 | Status Sinyal | NORMAL. Sentra Jawa −8,9% minggu ini. Seminggu setelah sinyal, luar Jawa rata-rata +11,6% (minggu biasa −0,2%) |
-| Kalender Risiko | Nataru: Cabai Rawit Merah +35%, Bawang Merah +23%, Telur +12% di atas normal. Lebaran: Daging Sapi Kualitas 1 +2,6%, satu-satunya yang signifikan |
+| Kalender Risiko | Tiga teratas Nataru: Cabai Rawit Merah +35%, Cabai Rawit Hijau +27%, Bawang Merah Ukuran Sedang +23% di atas normal. Yang signifikan hanya dua, keduanya Lebaran: Daging Sapi Kualitas 1 +2,6% dan Kualitas 2 +2,1% (Holm p = 0,008) |
 
 ### 3.9 Publikasi
 

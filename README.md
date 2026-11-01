@@ -2,7 +2,7 @@
 
 Analisis harga pangan strategis Indonesia 2018–2026: rantai pasok, disparitas wilayah, dan pola musiman. Data berasal dari [PIHPS Nasional (Bank Indonesia)](https://www.bi.go.id/hargapangan).
 
-> 🚧 **Status:** Fase 1–4 selesai (problem definition, pipeline data & star schema, analisis SQL, analisis Python). Fase 5: data dan desain dashboard sudah siap ([docs/05](docs/05_dashboard_tableau.md)); link Tableau Public akan ditambahkan di sini.
+> 📊 **Dashboard interaktif:** [Peta Harga Pangan Indonesia di Tableau Public](https://public.tableau.com/app/profile/moh.hasbi.alfarizi/viz/peta_harga_pangan/1Monitorharga). Tiga halaman: monitor harga, peta wilayah, serta rantai pasok & risiko. Cara membangunnya ada di [docs/05](docs/05_dashboard_tableau.md).
 
 ## Temuan utama
 
@@ -46,7 +46,7 @@ Detail lengkap ada di [docs/01_problem_definition.md](docs/01_problem_definition
 ```
 PIHPS (BI) + BPS → data/raw → PostgreSQL (raw → staging → mart)
                                    ├─→ Python: EDA, statistik, clustering
-                                   └─→ data/exports (CSV) → Tableau Public
+                                   └─→ data/exports (CSV + Excel) → Tableau Public
 ```
 
 ## Cara menjalankan
@@ -61,7 +61,7 @@ uv run python src/fetch_pihps.py --start 2023-01 --price-types 2 3 4    # modern
 uv run python src/load_raw.py                              # load ke schema raw
 uv run python src/build_warehouse.py                       # bangun staging + mart, jalankan quality checks
 uv run jupyter nbconvert --to notebook --execute --inplace notebooks/*.ipynb   # jalankan notebook analisis
-uv run python src/export_tableau.py                        # ekspor CSV untuk Tableau + cek hasilnya
+uv run python src/export_tableau.py                        # ekspor CSV + Excel untuk Tableau, cek hasilnya
 ```
 
 Penjelasan pipeline, star schema, dan keputusan cleaning ada di [docs/02_data_model.md](docs/02_data_model.md).
@@ -75,7 +75,7 @@ Koneksi database bisa diatur lewat environment variable `DATABASE_URL` (default:
 │   ├── raw/          # snapshot data mentah (tidak di-commit)
 │   ├── interim/      # hasil antara (tidak di-commit)
 │   ├── reference/    # data referensi kecil (koordinat provinsi)
-│   └── exports/      # CSV final untuk Tableau
+│   └── exports/      # CSV final dan dashboard_pangan.xlsx untuk Tableau
 ├── docs/             # dokumentasi proyek
 ├── sql/              # schema, staging, mart, quality checks, view ekspor
 │   └── analysis/     # satu query per pertanyaan bisnis

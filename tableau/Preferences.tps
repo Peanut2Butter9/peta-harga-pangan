@@ -19,6 +19,12 @@
       <color>#6250d6</color>
       <color>#e34948</color>
     </color-palette>
+    <!-- Seri tren harga: Nasional (abu-abu, acuan) dan Wilayah terpilih (biru).
+         "Assign Palette" membagi warna menurut abjad, jadi Nasional dapat warna pertama. -->
+    <color-palette name="Pangan - Nasional vs Wilayah" type="regular">
+      <color>#898781</color>
+      <color>#2a78d6</color>
+    </color-palette>
     <!-- Sekuensial: besaran (terang = kecil, gelap = besar) -->
     <color-palette name="Pangan - Sekuensial" type="ordered-sequential">
       <color>#cde2fb</color>
