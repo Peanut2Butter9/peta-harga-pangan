@@ -13,7 +13,7 @@ Bank Indonesia mempublikasikan data ini setiap hari lewat **PIHPS Nasional** (Pu
 
 ## 2. Skenario bisnis (fiktif)
 
-Kamu adalah data analyst di sebuah **jaringan restoran (fiktif)** yang punya outlet di banyak provinsi. Tim procurement membeli bahan baku secara lokal di setiap wilayah. Manajemen ingin tahu di mana dan kapan biaya bahan baku paling berisiko, supaya bisa merencanakan pembelian, stok, dan harga menu dengan lebih baik.
+Misalkan saya adalah data analyst di sebuah **jaringan restoran (fiktif)** yang punya outlet di banyak provinsi. Tim procurement membeli bahan baku secara lokal di setiap wilayah. Manajemen ingin tahu di mana dan kapan biaya bahan baku paling berisiko, supaya bisa merencanakan pembelian, stok, dan harga menu dengan lebih baik.
 
 ## 3. Stakeholder
 
