@@ -2,8 +2,8 @@
 <!--
   Palet warna dashboard, sama dengan src/viz.py (grafik notebook).
   Salin file ini ke folder repository Tableau, lalu buka ulang Tableau:
-    Tableau Public : ~/Documents/My Tableau Public Repository/Preferences.tps
-    Tableau Desktop: ~/Documents/My Tableau Repository/Preferences.tps
+    ~/Documents/My Tableau Repository/Preferences.tps
+  (Tableau Public versi lama memakai folder "My Tableau Public Repository".)
   Palet yang sudah dipakai ikut tersimpan di workbook, jadi tetap tampil setelah dipublikasikan.
 -->
 <workbook>

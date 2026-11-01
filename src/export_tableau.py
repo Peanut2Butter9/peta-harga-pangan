@@ -5,7 +5,8 @@ data/exports/. Bentuk datanya didefinisikan sebagai view di sql/05_exports.sql. 
   1. membuat ulang view tersebut,
   2. menyalin isinya ke CSV dengan COPY,
   3. melengkapi dimensi provinsi dengan koordinat peta dan hasil notebook (cluster, lead-lag),
-  4. mengecek hasilnya: kunci unik, ID cocok dengan dimensi, dan data sampai tanggal terakhir.
+  4. mengecek hasilnya: kunci unik, ID cocok dengan dimensi, dan data sampai tanggal terakhir,
+  5. menggabungkan semua tabel ke satu file Excel (dashboard_pangan.xlsx) yang dibuka Tableau.
 
 Jalankan setelah build_warehouse.py dan notebook 02-04, karena notebook menulis hasil
 analisisnya sendiri ke data/exports/.
@@ -19,10 +20,12 @@ from pathlib import Path
 
 import pandas as pd
 import psycopg
+import xlsxwriter
 
 ROOT = Path(__file__).resolve().parents[1]
 SQL_FILE = ROOT / "sql" / "05_exports.sql"
 EXPORT_DIR = ROOT / "data" / "exports"
+EXCEL_FILE = EXPORT_DIR / "dashboard_pangan.xlsx"
 KOORDINAT = ROOT / "data" / "reference" / "koordinat_provinsi.csv"
 DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://localhost/harga_pangan")
 
@@ -41,6 +44,11 @@ HASIL_NOTEBOOK = {
     "lead_lag_provinsi.csv": "notebooks/03_lead_lag_provinsi.ipynb",
     "cluster_provinsi.csv": "notebooks/04_clustering_provinsi.ipynb",
 }
+# sheet di file Excel untuk Tableau: fakta dulu, lalu dimensi
+SHEET_EXCEL = ["harga_mingguan", "harga_bulanan", "rantai_pasok", "sinyal_jawa", "risiko_hari_besar",
+               "provinsi", "komoditas", "jenis_pasar"]
+KOLOM_TANGGAL = ["minggu", "bulan", "periode_awal", "periode_akhir"]
+BARIS_MAKS_EXCEL = 1_048_576
 
 
 def salin_view(cur, view):
@@ -107,6 +115,39 @@ def cek_hasil(tanggal_terakhir):
     return gagal
 
 
+def tulis_excel():
+    """Gabungkan semua CSV ke satu file Excel, satu sheet per tabel.
+
+    Tableau membaca file ini, bukan CSV-nya. Di CSV, Tableau menebak pemisah kolom dan tanda
+    desimal dari locale komputer. Dengan locale Indonesia (desimal = koma), "0.0123" terbaca
+    sebagai teks, dan jenis_pasar.csv terpotong di "_" karena koma dikira tanda desimal.
+    Sel Excel menyimpan tipenya sendiri (angka, tanggal, boolean), jadi hasilnya sama di
+    komputer mana pun.
+    """
+    # constant_memory menulis baris demi baris, supaya 680 ribu baris tidak memenuhi RAM
+    with xlsxwriter.Workbook(EXCEL_FILE, {"constant_memory": True}) as wb:
+        format_tanggal = wb.add_format({"num_format": "yyyy-mm-dd"})
+        for nama in SHEET_EXCEL:
+            df = pd.read_csv(EXPORT_DIR / f"{nama}.csv")
+            if len(df) >= BARIS_MAKS_EXCEL:
+                sys.exit(f"{nama}: {len(df):,} baris, melebihi batas sheet Excel")
+            for kolom in df.columns.intersection(KOLOM_TANGGAL):
+                df[kolom] = pd.to_datetime(df[kolom])
+            tanggal = {i for i, kolom in enumerate(df.columns) if kolom in KOLOM_TANGGAL}
+
+            ws = wb.add_worksheet(nama)
+            ws.write_row(0, 0, df.columns)
+            for r, baris in enumerate(df.itertuples(index=False), start=1):
+                for c, nilai in enumerate(baris):
+                    if pd.isna(nilai):
+                        continue  # sel kosong = NULL di Tableau
+                    if c in tanggal:
+                        ws.write_datetime(r, c, nilai.to_pydatetime(), format_tanggal)
+                    else:
+                        ws.write(r, c, nilai)
+            print(f"  sheet {nama:<18} {len(df):>9,} baris")
+
+
 def main():
     belum_ada = [nb for f, nb in HASIL_NOTEBOOK.items() if not (EXPORT_DIR / f).exists()]
     if belum_ada:
@@ -127,6 +168,10 @@ def main():
     print("\nCek hasil ekspor:")
     if cek_hasil(tanggal_terakhir):
         sys.exit("\nAda cek ekspor yang gagal.")
+
+    print(f"\nMenulis {EXCEL_FILE.relative_to(ROOT)}:")
+    tulis_excel()
+    print(f"  {EXCEL_FILE.stat().st_size / 1e6:.1f} MB")
 
 
 if __name__ == "__main__":

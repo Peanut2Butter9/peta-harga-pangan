@@ -22,9 +22,13 @@ Dashboard untuk tim procurement: tiga halaman yang menjawab **berapa harga sekar
 
 ## 1. Data untuk Tableau
 
-Tableau Public tidak bisa terhubung ke PostgreSQL, jadi dashboard membaca CSV dari `data/exports/`. Tabel fakta hanya berisi ID dan angka, sedangkan nama-namanya ada di tabel dimensi, sama seperti star schema di mart. Dengan cara ini file terbesar hanya 32 MB.
+Tableau Public tidak bisa terhubung ke PostgreSQL, jadi setiap tabel diekspor ke CSV di `data/exports/`, lalu semuanya digabung ke **`dashboard_pangan.xlsx`**, satu sheet per tabel. Tableau membuka file Excel ini, bukan CSV-nya.
 
-| File | Grain | Baris | Sumber | Dipakai di |
+Kenapa Excel? Untuk CSV, Tableau menebak pemisah kolom dan tanda desimal dari locale komputer. Di Mac dengan region Indonesia (desimal = koma), kolom `perubahan_*` terbaca sebagai teks, dan `jenis_pasar.csv` dipotong di tanda `_` karena koma dikira tanda desimal. Sel Excel menyimpan tipenya sendiri (angka, tanggal, boolean), jadi hasilnya sama di komputer mana pun.
+
+Tabel fakta hanya berisi ID dan angka, sedangkan nama-namanya ada di tabel dimensi, sama seperti star schema di mart. Dengan cara ini file terbesar hanya 32 MB.
+
+| Sheet / CSV | Grain | Baris | Sumber | Dipakai di |
 |---|---|---|---|---|
 | `harga_mingguan.csv` | minggu × provinsi × varian × jenis pasar | 683.837 | SQL | Halaman 1 (KPI, tren) |
 | `harga_bulanan.csv` | bulan × provinsi × varian × jenis pasar | 157.811 | SQL | Halaman 1 (kalender), halaman 2 |
@@ -47,7 +51,7 @@ Untuk membuat ulang semua file (setelah `build_warehouse.py` dan notebook 02–0
 uv run python src/export_tableau.py
 ```
 
-Script ini juga mengecek bahwa kunci tiap file unik, semua ID punya pasangan di tabel dimensi, harga terisi, dan data sampai minggu terakhir. Dua file terbesar (`harga_mingguan.csv`, `harga_bulanan.csv`) tidak di-commit ke git karena bisa dibuat ulang.
+Script ini juga mengecek bahwa kunci tiap file unik, semua ID punya pasangan di tabel dimensi, harga terisi, dan data sampai minggu terakhir, lalu menulis `dashboard_pangan.xlsx` (~35 detik). Tiga file terbesar (`harga_mingguan.csv`, `harga_bulanan.csv`, `dashboard_pangan.xlsx`) tidak di-commit ke git karena bisa dibuat ulang.
 
 ---
 
@@ -104,7 +108,7 @@ Script ini juga mengecek bahwa kunci tiap file unik, semua ID punya pasangan di 
 
 Aturannya sama dengan grafik di notebook ([`src/viz.py`](../src/viz.py)), supaya README, notebook, dan dashboard terlihat seperti satu sistem.
 
-- **Palet:** salin [`tableau/Preferences.tps`](../tableau/Preferences.tps) ke `~/Documents/My Tableau Public Repository/`, lalu buka ulang Tableau Public. Muncul tiga palet:
+- **Palet:** salin [`tableau/Preferences.tps`](../tableau/Preferences.tps) ke `~/Documents/My Tableau Repository/` (folder ini dibuat Tableau Public saat pertama kali dibuka), lalu buka ulang Tableau Public. Muncul tiga palet:
   - **Pangan - Kategori** untuk identitas. Pakai berurutan dan jangan diulang. Untuk scatter dan peta, maksimal 3 warna pertama.
   - **Pangan - Divergen** untuk selisih dan perubahan. Biru = turun atau lebih murah, abu-abu = 0, merah = naik atau lebih mahal. Selalu atur **Center = 0**, dan biarkan *Use Full Color Range* **tidak** dicentang.
   - **Pangan - Sekuensial** untuk besaran.
@@ -121,28 +125,29 @@ Aturannya sama dengan grafik di notebook ([`src/viz.py`](../src/viz.py)), supaya
 
 ### 3.1 Persiapan
 
-1. Install **Tableau Public** (gratis) dari public.tableau.com, lalu buat akun.
+1. Install **Tableau Public** (Tableau Desktop Public Edition, gratis), dari tableau.com/products/public/download atau dengan `brew install --cask tableau-public`. Akun Tableau Public diperlukan untuk publikasi.
 2. Salin `tableau/Preferences.tps` seperti di atas, lalu buka Tableau Public.
 3. Jalankan `uv run python src/export_tableau.py` supaya data di `data/exports/` paling baru.
+4. Simpan pekerjaan secara lokal sejak awal: *File → Save As* → `tableau/peta_harga_pangan.twbx` (Tableau Packaged Workbook). Sejak 2024 versi gratis bisa menyimpan ke komputer, tidak hanya ke Tableau Public. Selalu simpan lewat menu *File*, karena di Tableau Public **Cmd+S berarti *Save to Tableau Public***, bukan simpan ke komputer.
 
 ### 3.2 Sambungkan data (5 data source)
 
-Di halaman awal pilih *Connect → Text file*, lalu buka `data/exports/harga_mingguan.csv`. Seret tabel dimensi dari panel kiri ke kanvas, di samping tabel fakta. Tableau akan membuat **relationship** (garis penghubung). Cek kolom penghubungnya di setiap garis.
+Di halaman awal pilih *Connect → Microsoft Excel*, lalu buka `data/exports/dashboard_pangan.xlsx`. Panel kiri menampilkan 8 sheet. Seret sheet tabel utama ke kanvas, lalu seret sheet dimensi ke sampingnya. Tableau akan membuat **relationship** (garis penghubung). Semua garis harus berpangkal di tabel utama, membentuk bintang, bukan rantai. Cek kolom penghubungnya di setiap garis.
 
 | Data source (ganti namanya) | Tabel utama | Relationship |
 |---|---|---|
-| **Mingguan** | `harga_mingguan.csv` | `provinsi.csv` (wilayah_id), `komoditas.csv` (komoditas_id), `jenis_pasar.csv` (jenis_pasar_id) |
-| **Bulanan** | `harga_bulanan.csv` | sama dengan Mingguan |
-| **Rantai Pasok** | `rantai_pasok.csv` | `komoditas.csv`, `jenis_pasar.csv` |
-| **Sinyal** | `sinyal_jawa.csv` | `komoditas.csv` |
-| **Risiko** | `risiko_hari_besar.csv` | `komoditas.csv` |
+| **Mingguan** | `harga_mingguan` | `provinsi` (wilayah_id), `komoditas` (komoditas_id), `jenis_pasar` (jenis_pasar_id) |
+| **Bulanan** | `harga_bulanan` | sama dengan Mingguan |
+| **Rantai Pasok** | `rantai_pasok` | `komoditas`, `jenis_pasar` |
+| **Sinyal** | `sinyal_jawa` | `komoditas` |
+| **Risiko** | `risiko_hari_besar` | `komoditas` |
 
-Data source berikutnya ditambahkan lewat *Data → New Data Source*.
+Data source berikutnya ditambahkan lewat *Data → New Data Source → Microsoft Excel*, dengan file yang sama.
 
 Setelah itu, di setiap data source:
 - Tableau otomatis merapikan nama kolom (`perubahan_4_minggu` jadi **Perubahan 4 Minggu**). Rumus di bawah memakai nama yang sudah dirapikan. Kalau ada dua kolom bernama sama, misalnya **Wilayah Id**, pakai yang dari tabel fakta.
 - Ubah *Default Properties → Aggregation* menjadi **Average** untuk `Harga` dan semua kolom `Perubahan …`.
-- Pastikan `Minggu` dan `Bulan` bertipe *Date*, dan semua kolom `… Id` menjadi *Dimension*.
+- Pastikan `Minggu` dan `Bulan` bertipe *Date* (bukan *Date & Time*), dan semua kolom `… Id` menjadi *Dimension*.
 
 ### 3.3 Parameter
 
@@ -154,8 +159,10 @@ Parameter dipakai sebagai pengganti filter, karena satu parameter bisa mengendal
 | **Pilih Wilayah** | String, *List* | *When workbook opens:* `Wilayah` | Nasional |
 | **Pilih Pasar** | String, *List* | *When workbook opens:* `Jenis Pasar` | Pasar Tradisional |
 | **Rentang Tahun** | Integer, *List* | 1 = "1 tahun", 3 = "3 tahun", 5 = "5 tahun", 9 = "Semua" | 3 |
-| **Tahun Peta** | Integer, *List* | 2018 … 2026 | 2026 |
+| **Tahun Peta** | Integer, *Range* | 2018 … 2026, step 1 | 2026 |
 | **Ambang Sinyal** | Float, *List* | 0,8 = "20% tertinggi", 0,9 = "10% tertinggi", 0,95 = "5% tertinggi" | 0,9 |
+
+Dengan region Indonesia, Tableau memakai koma sebagai tanda desimal, jadi nilai Ambang Sinyal diketik `0,9`, bukan `0.9`.
 
 ### 3.4 Calculated field
 
@@ -329,7 +336,7 @@ Dengan default (Cabai Rawit Merah, Nasional, Pasar Tradisional, 2026), dashboard
    - Matikan *Show workbook sheets as tabs*, karena navigasi sudah memakai tombol.
    - Isi deskripsi singkat dan link ke repo GitHub.
    - Izinkan download supaya orang lain bisa membuka workbook-nya.
-3. Unduh workbook (*Download → Tableau Workbook*) ke `tableau/peta_harga_pangan.twbx`.
+3. Simpan juga versi lokal terakhir (*File → Save*) ke `tableau/peta_harga_pangan.twbx`, supaya file di repo sama dengan yang dipublikasikan.
 4. Ambil screenshot halaman 1 untuk `reports/figures/05_dashboard.png`, lalu isi link Tableau Public di README dan di bagian atas dokumen ini.
 
 ---
